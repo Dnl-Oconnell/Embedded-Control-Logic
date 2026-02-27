@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+// A worked example of avoiding Hysterisis to protect electronic components in circuit
+// Keep the temperature in the payload between 18 and 25 degrees celcius
+
+float thermostat(){
+
+    // initialising static variables, these values will be "remembered" by the function through every cycle
+    static float currentTemperature = 25;
+    static int heater = 0;
+
+    // Hysterisis logic, keeps heater on or off between two set boundaries and ensures payload stay within
+    // temperature range. relays wont "chatter" or become damaged
+    // Comes before implementing heat change as starting temperature can be outside of the allowed boudaries
+    if (currentTemperature <= 19){
+        heater = 1;
+    }
+    if (currentTemperature >= 24){
+        heater = 0;
+    }
+
+    // checks if heater is on or off, adjusts temperature accordingly
+    if (heater == 0){
+        currentTemperature -= 0.5;
+    }
+    else{
+        currentTemperature += 0.8;
+    }
+
+    return currentTemperature;
+}
+
+int main(){
+    // loop set to 51 cycles, can be converted to "super loop" by changing to while(true)
+    for(int i = 0; i <= 50; i++){
+        thermostat();
+        printf("The temperature at cycle #%i is %.1f\n", i, thermostat());
+    }
+}
