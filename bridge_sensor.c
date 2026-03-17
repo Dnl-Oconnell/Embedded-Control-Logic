@@ -70,8 +70,8 @@ int detectAnomalies(double arr[], int len, double threshold, int anomalies[]){
 
 // printing the results in a neat table with an alert in case the values exceeded the threshold
 void printReport(double noisySignal[], double smoothSignal[], int len, int anomalies[], int numAnomalies){
-    printf("Index %-6| Noisy %-18| Smooth %-18| Status|\n");
-    printf("------------------------------\n");
+    printf("%-6s| %-9s | %-9s | %s\n", "Index", "Noisy", "Smooth", "Status");
+    printf("------|-----------|-----------|---------\n");
     int j = 0;
     for(int i = 0; i < len; i ++){
         // checks if the current value of i is also a value above the error from detectAnomalies
